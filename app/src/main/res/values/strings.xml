@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Daily Workout</string>
+    <string name="activity_type">Activity Type</string>
+    <string name="miles">Miles</string>
+    <string name="date">Date</string>
+    <string name="add">Add</string>
+</resources>
