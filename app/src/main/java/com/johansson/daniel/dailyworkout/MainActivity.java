@@ -2,9 +2,14 @@ package com.johansson.daniel.dailyworkout;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -24,12 +29,8 @@ public class MainActivity extends AppCompatActivity {
     EditText txtActivity;
     EditText txtMiles;
     EditText txtDate;
-
-    TextView txtHeader;
-    TextView txtOutput;
-
+    TableLayout outputTable;
     Button btnAdd;
-
     ArrayList<DailyActivity> dailyActivities;
 
     @Override
@@ -41,12 +42,9 @@ public class MainActivity extends AppCompatActivity {
         txtMiles = findViewById(R.id.txtMiles);
         txtDate = findViewById(R.id.txtDate);
 
-        txtOutput = findViewById(R.id.txtOutput);
-        txtHeader = findViewById(R.id.txtHeader);
+        outputTable = findViewById(R.id.outputTable);
 
-        txtHeader.setText("Activity" + " " + "Miles" + " " + "Dates");
-
-        dailyActivities = new ArrayList<DailyActivity>();
+        dailyActivities = new ArrayList<>();
 
         loadData();
         outputData();
@@ -80,8 +78,6 @@ public class MainActivity extends AppCompatActivity {
             outputFile.flush();
             outputFile.close();
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -90,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
     public void loadData(){
 
         dailyActivities.clear();
+        while (outputTable.getChildCount() > 1)
+            outputTable.removeView(outputTable.getChildAt(outputTable.getChildCount() - 1));
 
         File file = getApplicationContext().getFileStreamPath(FILE_NAME);
         String lineFromFile;
@@ -113,13 +111,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void outputData(){
-        String userInput = "";
 
-        for (int i = 0; i < dailyActivities.size(); i++){
-            userInput = userInput + dailyActivities.get(i).getActivity() + " " + dailyActivities.get(i).getMiles() + " " + dailyActivities.get(i).getDate() + "\n";
+        ArrayList<DailyActivity> outputList = new ArrayList<>();
+        int size = dailyActivities.size()-1;
+
+        for(int i=size;i>=0;i--){
+            outputList.add(dailyActivities.get(i));
         }
 
-        txtOutput.setText(userInput);
+        for (int i = 0; i < outputList.size(); i++){
+            TableRow row = new TableRow(this);
+            TextView activities = new TextView(this);
+            TextView miles = new TextView(this);
+            TextView date = new TextView(this);
+            activities.setText(outputList.get(i).getActivity());
+            miles.setText(outputList.get(i).getMiles());
+            date.setText(outputList.get(i).getDate());
+            row.addView(activities);
+            row.addView(miles);
+            row.addView(date);
+            outputTable.addView(row);
+        }
     }
 
 }
