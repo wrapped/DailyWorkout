@@ -1,11 +1,13 @@
 package com.johansson.daniel.dailyworkout;
 
+//Get and set methods for user input
+
 public class DailyActivity {
     private String activity;
     private String miles;
     private String date;
 
-    public DailyActivity(String activity, String miles, String date){
+    DailyActivity(String activity, String miles, String date){
         this.activity = activity;
         this.miles = miles;
         this.date = date;

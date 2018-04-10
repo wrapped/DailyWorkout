@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- User input layout -->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,7 +16,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:hint="@string/activity_type"
-        android:inputType="textPersonName"
+        android:inputType="textCapSentences"
         android:minWidth="360dp" />
 
     <EditText
@@ -46,6 +49,7 @@
         android:onClick="add"
         />
 
+    <!-- Layout for data display section -->
     <TableLayout
         android:id="@+id/outputTable"
         android:layout_width="match_parent"
